@@ -1,0 +1,31 @@
+springdoc:
+  api-docs:
+    path: /api/api-docs
+spring:
+  mvc:
+    log-request-details: true
+  cloud:
+    azure:
+      activeDirectory:
+        enabled: true
+        profile:
+          tenantId: ${AZURE_TENANT_ID}
+        credential:
+          clientId: ${AZURE_CLIENT_ID}
+          clientSecret: ${AZURE_CLIENT_SECRET}
+        authorizationClients:
+          graph:
+            scopes:
+              - https://graph.microsoft.com/User.Read
+server:
+  port: 8080
+  forward-headers-strategy: native
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+
+logging:
+  level:
+    org.springframework.security: debug
+    com.microsoft: debug
