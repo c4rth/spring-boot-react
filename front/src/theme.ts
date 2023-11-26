@@ -4,17 +4,17 @@ import InterFontWoff2 from '../fonts/inter-regular.woff2';
 const themeOptions: ThemeOptions = {
     palette: {
         primary: {
-            main: '#00695f',
+            main: '#009688',
             contrastText: '#FFFFFF'
         },
         secondary: {
-            main: '#4615b2',
+            main: '#00bcd4',
         },
     },
-    typography: {
-        fontFamily: 'Inter',
-        fontSize: 14,
-    },
+    //typography: {
+    //    fontFamily: 'Inter',
+    //    fontSize: 14,
+    //},
     components: {
         MuiCssBaseline: {
             styleOverrides: `

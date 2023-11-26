@@ -7,7 +7,7 @@ export const MainContent = () => {
 
     return (
         <Container sx={{ mt: 3}}>
-                <h5 className="card-title">You are logged.</h5>
+                <h5 className="card-title">Welcome</h5>
         </Container>
     );
 };

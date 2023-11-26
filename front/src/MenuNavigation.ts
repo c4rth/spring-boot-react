@@ -6,5 +6,6 @@ export enum MenuNavigation {
     DUMMY = "/dummy",
     MUI_TABLE = "/mui/table",
     MUI_MISC = "/mui/misc",
-    MUI_DIALOG = "/mui/dialog"
+    MUI_DIALOG = "/mui/dialog",
+    ERROR = "/error",
 }

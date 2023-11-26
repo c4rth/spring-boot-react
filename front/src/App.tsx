@@ -12,6 +12,7 @@ import { MuiMisc } from './pages/mui/misc/MuiMisc';
 import { MuiDialog } from './pages/mui/dialog/MuiDialog';
 import {NotFoundContent} from "./pages/NotFoundContent.tsx";
 import {useEffect} from "react";
+import {ErrorContent} from "./pages/ErrorContent.tsx";
 
 export default function App() {
 
@@ -41,7 +42,8 @@ export default function App() {
                         <Route path={MenuNavigation.MUI_TABLE} element={<MuiTable />} />
                         <Route path={MenuNavigation.MUI_MISC} element={<MuiMisc />} />
                         <Route path={MenuNavigation.MUI_DIALOG} element={<MuiDialog />} />
-                        <Route element={<NotFoundContent />} />
+                        <Route path={MenuNavigation.ERROR} element={<ErrorContent />} />
+                        <Route path="*" element={<NotFoundContent />} />
                     </Routes>
                 </>
             </BrowserRouter >

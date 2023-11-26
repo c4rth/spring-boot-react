@@ -1,6 +1,7 @@
 package org.carth.springreact.config;
 
 import com.azure.spring.cloud.autoconfigure.aad.AadWebSecurityConfigurerAdapter;
+import org.carth.springreact.web.HeadersFilter;
 import org.carth.springreact.web.SpaWebFilter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,7 +18,7 @@ public class AadOAuth2LoginSecurityConfig extends AadWebSecurityConfigurerAdapte
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests((authz) -> authz.anyRequest().authenticated())
-                .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
-                .csrf().disable();
+                .addFilterAfter(new HeadersFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new SpaWebFilter(), HeadersFilter.class);
     }
 }

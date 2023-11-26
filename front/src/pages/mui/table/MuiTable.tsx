@@ -17,26 +17,12 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import { MultipleSelect } from '../../../components/MultipleSelect'
 import { ApiPerson } from '../../../model/ApiPerson'
-import { Button, TextField, Chip, Checkbox } from '@mui/material'
+import { Button, TextField, Checkbox } from '@mui/material'
 import { useGlobalLoading } from "../../../components/GlobalLoading";
 import {apiSpringAad} from "../../../openapi";
 import {AxiosResponse} from "axios";
 import * as FileSaver from "file-saver";
-
-const multiSelectOptions = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-    'Option 5',
-    'Option 6',
-    'Option 7',
-    'Option 8',
-    'Option 9',
-    'Option 10',
-];
 
 type MetaType = TableMeta<ApiPerson> & {
     updateData: (rowIndex: number, columnId: string, value: boolean) => void
@@ -75,7 +61,6 @@ export const MuiTable = () => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(1000);
     const [data, setData] = useState<ApiPerson[]>([]);
-    const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
     const { showLoading, hideLoading } = useGlobalLoading();
 
     useEffect(() => {
@@ -92,10 +77,6 @@ export const MuiTable = () => {
     const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
         setPage(value - 1);
     };
-
-    function onCloseMultipleSelect(selected: string[]) {
-        setSelectedTeams(selected);
-    }
 
     const downloadExcel = () => {
         // Fetch the Excel file with .xls extension
@@ -135,12 +116,6 @@ export const MuiTable = () => {
             <Stack alignItems='center' direction="row" spacing={1}>
                 <TextField label="Report rows" inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} variant="outlined" value={size} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSize(parseInt(event.target.value))} />
                 <Button onClick={downloadExcel}>Download XLSX</Button>
-            </Stack>
-            <MultipleSelect label="Teams" names={multiSelectOptions} onClose={onCloseMultipleSelect} />
-            <Stack direction="row" spacing={1} mb={3}>
-                {selectedTeams.map((team) =>
-                    <Chip label={team} color='primary' size="small" />
-                )}
             </Stack>
             <Box sx={{ maxWidth: '100%' }}>
                 <TableContainer id='local-table' sx={{ height: '50em', overflow: 'auto' }}>

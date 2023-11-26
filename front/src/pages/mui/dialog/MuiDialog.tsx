@@ -1,14 +1,36 @@
-import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, MenuItem, Select, Snackbar, Stack, Typography } from "@mui/material";
+import {
+    Alert,
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider,
+    MenuItem,
+    Select,
+    Snackbar,
+    Stack,
+    Typography
+} from "@mui/material";
 import { useState } from "react";
 import { useGlobalLoading } from "../../../components/GlobalLoading";
+import {AlertColor, AlertPropsVariantOverrides} from "@mui/material/Alert/Alert";
+import {OverridableStringUnion} from "@mui/types";
 
 
+type SnackVariant = OverridableStringUnion<'standard' | 'filled' | 'outlined', AlertPropsVariantOverrides>;
+type SnackAnchorVertical = 'top' | 'bottom';
+type SnackAnchorHorizontal = 'left' | 'center' | 'right';
 export const MuiDialog = () => {
 
     const { showLoading, hideLoading } = useGlobalLoading();
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackVariant, setSnackVariant] = useState<'standard' | 'filled' | 'outlined'>('standard');
-    const [snackSeverity, setSnackSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('error');
+    const [snackVariant, setSnackVariant] = useState<SnackVariant>('standard');
+    const [snackSeverity, setSnackSeverity] = useState<AlertColor>('error');
+    const [snackAnchorHorizontal, setSnackAnchorHorizontal] = useState<SnackAnchorHorizontal>('left');
+    const [snackAnchorVertical, setSnackAnchorVertical] = useState<SnackAnchorVertical>('bottom');
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleLoadingStart = () => {
@@ -34,22 +56,6 @@ export const MuiDialog = () => {
         setOpenDialog(false);
     }
 
-    function handleSnackVariant(str: string) {
-        switch (str) {
-            case 'standard': setSnackVariant('standard'); break;
-            case 'filled': setSnackVariant('filled'); break;
-            default: setSnackVariant('outlined'); break;
-        }
-    }
-    function handleSnackSeverity(str: string) {
-        switch (str) {
-            case 'error': setSnackSeverity('error'); break;
-            case 'warning': setSnackSeverity('warning'); break;
-            case 'info': setSnackSeverity('info'); break;
-            default: setSnackSeverity('success'); break;
-        }
-    }
-
     return (
         <>
             <Container sx={{ mt: 3 }}>
@@ -70,17 +76,26 @@ export const MuiDialog = () => {
                         loading
                     </Button>
                     <Divider color='primary' sx={{ width: '100%' }} />
-                    <Stack direction='row' spacing='3'>
-                        <Select value={snackVariant} onChange={(e) => handleSnackVariant(e.target.value)}>
+                    <Stack direction='row' spacing={3}>
+                        <Select value={snackVariant} onChange={(e) => setSnackVariant(e.target.value as SnackVariant)}>
                             <MenuItem value='standard'>standard</MenuItem>
                             <MenuItem value='filled'>filled</MenuItem>
                             <MenuItem value='outlined'>outlined</MenuItem>
                         </Select>
-                        <Select value={snackSeverity} onChange={(e) => handleSnackSeverity(e.target.value)}>
+                        <Select value={snackSeverity} onChange={(e) => setSnackSeverity(e.target.value as AlertColor)}>
                             <MenuItem value='error'>error</MenuItem>
                             <MenuItem value='warning'>warning</MenuItem>
                             <MenuItem value='info'>info</MenuItem>
                             <MenuItem value='success'>success</MenuItem>
+                        </Select>
+                        <Select value={snackAnchorHorizontal} onChange={(e) => setSnackAnchorHorizontal(e.target.value as SnackAnchorHorizontal)}>
+                            <MenuItem value='left'>left</MenuItem>
+                            <MenuItem value='center'>center</MenuItem>
+                            <MenuItem value='right'>right</MenuItem>
+                        </Select>
+                        <Select value={snackAnchorVertical} onChange={(e) => setSnackAnchorVertical(e.target.value as SnackAnchorVertical)}>
+                            <MenuItem value='bottom'>bottom</MenuItem>
+                            <MenuItem value='top'>top</MenuItem>
                         </Select>
                     </Stack>
                     <Button
@@ -93,6 +108,7 @@ export const MuiDialog = () => {
             </Container>
             <Snackbar
                 open={openSnackbar}
+                anchorOrigin={{horizontal: snackAnchorHorizontal, vertical: snackAnchorVertical}}
                 autoHideDuration={2000}
                 onClose={handleSnackbarClose}>
                 <Alert variant={snackVariant} severity={snackSeverity}><Typography>This is a {snackVariant} {snackSeverity} Snackbar</Typography></Alert>
