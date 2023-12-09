@@ -17,13 +17,20 @@ Fake data:
 
 ## Run Configuration
 
+### Azure App registration
+Create an App registration :
+- Secret 
+- Authentication:
+  - Platform configurations: Web, redirect URL = http://localhost:8080/login/oauth2/code/  
+
 ### Environment variables
 AZURE_TENANT_ID="_Specifies your Active Directory ID_"\
 AZURE_CLIENT_ID="_Specifies your App Registration's Application ID_"\
 AZURE_CLIENT_SECRET="_Specifies your App Registration's secret key_"
 
 ## IntelliJ run file
-Run npm script 'build' [front\package.json]
+- build the React app
+- start the Spring Boot application
 
 ```xml
 <component name="ProjectRunConfigurationManager">
@@ -60,6 +67,12 @@ UI:
 
 Generate Typescript from OpenApi:
 - [swagger-typescript-api](https://github.com/acacode/swagger-typescript-api)
+
+### Install dependencies
+In `front` directory:
+```
+npm install
+```
 
 ### Build
 In `front` directory:
